@@ -1,0 +1,211 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Official DPRS Botanical and Mycological Repository</title>
+  <link href="https://fonts.googleapis.com/css2?family=Ubuntu:wght@400;500;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
+  
+  <style>
+    :root {
+      --dark-slate: #2a3f3f;
+      --forest-green: #467750;
+      --light-green: #89c07e;
+      --bg-color: #e0e8e2;
+      --gold: #f0cd6e;
+      --terracotta: #cc5500; /* Fungi accent */
+    }
+
+    * { box-sizing: border-box; }
+
+    body {
+      margin: 0;
+      font-family: 'Ubuntu', sans-weight;
+      background-color: var(--bg-color);
+      color: var(--dark-slate);
+    }
+
+    /* Header */
+    header {
+      background-color: var(--dark-slate);
+      color: var(--bg-color);
+      padding: 20px 40px;
+      display: flex;
+      flex-direction: column;
+      position: sticky;
+      top: 0;
+      z-index: 1000;
+    }
+
+    .header-top {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    h1 {
+      margin: 0;
+      font-size: 1.8rem;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      color: var(--gold);
+    }
+
+    h1 img { height: 1.2em; }
+    h2 { margin: 5px 0 0 0; font-size: 1.2rem; font-weight: 400; color: var(--light-green); }
+
+    .view-toggles button {
+      background-color: var(--forest-green);
+      color: #fff;
+      border: none;
+      padding: 10px 20px;
+      border-radius: 5px;
+      cursor: pointer;
+      font-family: 'Ubuntu', sans-serif;
+      font-weight: bold;
+      transition: background 0.3s;
+    }
+
+    .view-toggles button.active, .view-toggles button:hover {
+      background-color: var(--gold);
+      color: var(--dark-slate);
+    }
+
+    /* Sections Container */
+    main { padding: 40px; max-width: 1400px; margin: auto; }
+
+    .content-section {
+      background: #fff;
+      padding: 30px;
+      border-radius: 8px;
+      margin-bottom: 30px;
+      box-shadow: 0 4px 6px rgba(0,0,0,0.05);
+      border-top: 5px solid var(--forest-green);
+    }
+
+    .content-section h3 { margin-top: 0; color: var(--dark-slate); }
+    a { color: var(--forest-green); font-weight: bold; text-decoration: none; }
+    a:hover { color: var(--gold); }
+
+    /* Controls (Search, Sort, Filters) */
+    .controls {
+      display: flex;
+      gap: 15px;
+      margin-bottom: 20px;
+      flex-wrap: wrap;
+    }
+
+    input, select, .controls button {
+      padding: 10px;
+      font-family: 'Ubuntu', sans-serif;
+      border: 1px solid #ccc;
+      border-radius: 5px;
+      font-size: 1rem;
+    }
+
+    input { flex: 1; min-width: 250px; }
+
+    /* Grid */
+    #species-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+      gap: 20px;
+    }
+
+    .card {
+      background: #fff;
+      border-radius: 8px;
+      overflow: hidden;
+      cursor: pointer;
+      box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+      transition: transform 0.2s;
+      position: relative;
+    }
+
+    .card:hover { transform: translateY(-5px); box-shadow: 0 5px 15px rgba(0,0,0,0.2); }
+    
+    .card-stripe {
+      height: 8px;
+      width: 100%;
+    }
+    .stripe-Plantae { background-color: var(--light-green); }
+    .stripe-Fungi { background-color: var(--terracotta); }
+
+    .card img { width: 100%; height: 180px; object-fit: cover; }
+    .card-info { padding: 15px; }
+    .card-title { font-weight: bold; font-size: 1.1rem; margin-bottom: 5px; }
+    .card-sub { font-style: italic; color: #666; font-size: 0.9rem; }
+
+    /* Detail Slide-in Panel */
+    #detail-panel {
+      position: fixed;
+      top: 0;
+      right: -100%;
+      width: 100%;
+      max-width: 500px;
+      height: 100vh;
+      background: #fff;
+      box-shadow: -5px 0 15px rgba(0,0,0,0.2);
+      z-index: 2000;
+      transition: right 0.3s ease;
+      overflow-y: auto;
+      padding: 30px;
+    }
+    #detail-panel.open { right: 0; }
+    .close-btn { cursor: pointer; font-size: 1.5rem; float: right; color: var(--dark-slate); }
+    
+    .gallery { display: flex; gap: 10px; margin: 15px 0; overflow-x: auto; }
+    .gallery img { width: 100px; height: 100px; object-fit: cover; border-radius: 5px; cursor: pointer; }
+
+    #mini-map { height: 200px; width: 100%; background: #ccc; margin-top: 15px; border-radius: 5px; }
+    
+    /* Main Map View */
+    #map-view { display: none; height: 75vh; border-radius: 8px; border: 3px solid var(--forest-green); }
+  </style>
+</head>
+<body>
+
+  <header>
+    <div class="header-top">
+      <div>
+        <h1><img src="https://i.ibb.co/sphHdgwH/dprs.png" alt="DPRS"> Official DPRS Botanical and Mycological Repository</h1>
+        <h2>A Collection of Guam’s Flora and Fungi</h2>
+      </div>
+      <div class="view-toggles">
+        <button id="btn-grid" class="active" onclick="toggleView('grid')">Grid View</button>
+        <button id="btn-map" onclick="toggleView('map')">Map View</button>
+      </div>
+    </div>
+  </header>
+
+  <main id="main-content">
+    <div id="home-sections">
+      <section class="content-section" id="about">
+        <h3>About This Guide</h3>
+        <p>Welcome to the Official DPRS Botanical and Mycological Repository. Here, we have created a digital archive of the vibrant flora and fungi that can be found in Guam’s ecosystems. Thanks to the community-driven observations on iNaturalist, we have created an accessible guide for any person interested in learning about Guam’s biodiversity. Whether you are an avid hiker, a student, or a curious neighbor, this resource was created to help you identify, understand, and protect the unique species that share our island home. Enjoy your stay! :)</p>
+        <p>Do you want to learn more about the hidden biodiversity that can be found in your backyard? Ever see a plant that looked interesting but you had no idea what it was? <a href="https://www.inaturalist.org/signup" target="_blank">Sign-up on iNaturalist</a> to join other Guam citizens in documenting our island’s biodiversity!</p>
+      </section>
+
+      <section class="content-section" id="sotd">
+        <h3>Species of the Day</h3>
+        <div id="sotd-content">Loading...</div>
+      </section>
+
+      <section class="content-section" id="quick-refs">
+        <h3>Quick References & Resources</h3>
+        <p>Explore our curated collections of resources, readings, and traditional practices:</p>
+        <ul>
+          <li><a href="references.html#community" target="_blank">Community Resources</a></li>
+          <li><a href="references.html#readings" target="_blank">Supplementary Readings</a></li>
+          <li><a href="references.html#amot" target="_blank">Traditional Medicinal Plants Guide (Åmot)</a></li>
+        </ul>
+      </section>
+
+      <section class="content-section" id="games">
+        <h3>Educational Games</h3>
+        <ul>
+          <li><strong>MetaZooa (Flora):</strong> Guess the plant in this taxonomy-based daily game. <a href="https://flora.metazooa.com/?utm_source=metazooa&utm_medium=referral" target="_blank">Play Here</a></li>
+          <li><strong>Turtle Diary - Plant Games:</strong> Great for learning basic plant anatomy and life cycles. <a href="https://www.turtlediary.com/games/plants.html" target="_blank">Play Here</a></li>
+          <li><strong>Seed Survivor:</strong> Interactive games for kids to understand

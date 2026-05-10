@@ -1,0 +1,148 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Quick References - DPRS Repository</title>
+  <link href="https://fonts.googleapis.com/css2?family=Ubuntu:wght@400;500;700&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --dark-slate: #2a3f3f;
+      --forest-green: #467750;
+      --bg-color: #e0e8e2;
+      --gold: #f0cd6e;
+    }
+    body {
+      font-family: 'Ubuntu', sans-serif;
+      background-color: var(--bg-color);
+      color: var(--dark-slate);
+      margin: 0;
+      padding: 40px;
+      line-height: 1.6;
+    }
+    h1 { color: var(--forest-green); border-bottom: 2px solid var(--gold); padding-bottom: 10px; }
+    h2 { color: var(--dark-slate); margin-top: 40px; }
+    .card-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(300px, 1fr)); gap: 20px; }
+    .card { background: #fff; padding: 20px; border-radius: 8px; box-shadow: 0 4px 6px rgba(0,0,0,0.05); border-left: 5px solid var(--forest-green); }
+    .card h3 { margin-top: 0; }
+    a { color: var(--forest-green); font-weight: bold; text-decoration: none; display: inline-block; margin-top: 10px; }
+    a:hover { color: var(--gold); }
+    
+    /* Table for Medicinal Plants */
+    table { width: 100%; border-collapse: collapse; background: #fff; margin-top: 20px; box-shadow: 0 4px 6px rgba(0,0,0,0.05); }
+    th, td { padding: 15px; border-bottom: 1px solid #ddd; text-align: left; }
+    th { background-color: var(--dark-slate); color: #fff; }
+    tr:nth-child(even) { background-color: #f9f9f9; }
+  </style>
+</head>
+<body>
+
+  <h1>Supplementary Information & Resources</h1>
+
+  <h2 id="community">UOG Research Facilities</h2>
+  <div class="card-grid">
+    <div class="card">
+      <h3>UOG Herbarium</h3>
+      <p>Over 60,000 plant specimens from Guam and Micronesia. The primary botanical research facility for the region.</p>
+      <a href="https://www.uog.edu/herbarium/" target="_blank">Visit site ↗</a>
+    </div>
+    <div class="card">
+      <h3>UOG Center for Island Sustainability</h3>
+      <p>Conducts and shares research on Guam's ecosystems, flora origins, and biodiversity.</p>
+      <a href="https://www.uog.edu/center-for-island-sustainability/" target="_blank">Visit site ↗</a>
+    </div>
+  </div>
+
+  <h2>Government Agencies</h2>
+  <div class="card-grid">
+    <div class="card">
+      <h3>Dept. of Agriculture — Aquatic & Wildlife</h3>
+      <p>Responsible for protecting Guam's native flora and managing invasive species.</p>
+      <a href="https://doag.guam.gov/dawr/" target="_blank">Visit site ↗</a>
+    </div>
+    <div class="card">
+      <h3>Guam National Wildlife Refuge</h3>
+      <p>Protects 4,000+ acres of native limestone and coastal forest at Ritidian Point.</p>
+      <a href="https://www.fws.gov/refuge/guam" target="_blank">Visit site ↗</a>
+    </div>
+  </div>
+
+  <h2>NGO & Nonprofits</h2>
+  <div class="card-grid">
+    <div class="card">
+      <h3>Guam Nature Alliance</h3>
+      <p>Partnership focused on land (Tano), freshwater (Hannom), and sea (Tasi) conservation.</p>
+      <a href="https://bsp.guam.gov/guam-nature-alliance/" target="_blank">Visit site ↗</a>
+    </div>
+    <div class="card">
+      <h3>Prutehi Litekyan! Save Ritidian</h3>
+      <p>Action group dedicated to the protection of natural and cultural resources.</p>
+      <a href="https://www.saveritidian.com/about" target="_blank">Visit site ↗</a>
+    </div>
+  </div>
+
+  <h2 id="readings">Supplementary Readings (PDFs & Journals)</h2>
+  <ul>
+    <li><strong>Guam Forestry Native Plants of Guam Series:</strong> Care and identification sheets for native plants. <a href="https://doag.guam.gov/wp-doag-content/uploads/2025/02/Native-Plants-of-Guam-Series-2025.pdf" target="_blank">Download PDF</a></li>
+    <li><strong>The Flora of Guam:</strong> The definitive reference for Guam's vascular plants by B.C. Stone (1970). <a href="https://micronesica.org/sites/default/files/floraguam.stone1970_0.pdf" target="_blank">Download PDF</a></li>
+    <li><strong>Origins of Micronesian Flora:</strong> Traces the origins of Micronesian plant species. <a href="https://www.uog.edu/center-for-island-sustainability/blog/cis-research-origins-of-plants" target="_blank">Read online</a></li>
+  </ul>
+
+  <h2 id="amot">Traditional Medicinal Plants Guide (Åmot)</h2>
+  <table>
+    <thead>
+      <tr>
+        <th>CHamoru Name</th>
+        <th>Scientific Name</th>
+        <th>Environment</th>
+        <th>Traditional Uses</th>
+        <th>Parts Used</th>
+        <th>Åmot Classes</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><strong>Åbas</strong></td>
+        <td><i><a href="https://en.wikipedia.org/wiki/Psidium_guajava" target="_blank">Psidium guajava</a></i></td>
+        <td>Inland, mountain</td>
+        <td>Nausea, wounds, vaginal discomfort</td>
+        <td>Bark, leaves, fruits</td>
+        <td>Åmot Labatoriu, Åmot Masisinek, Åmot Puten Tuyan</td>
+      </tr>
+      <tr>
+        <td><strong>Agulonde' / Glondi</strong></td>
+        <td><i><a href="https://en.wikipedia.org/wiki/Vitex_negundo" target="_blank">Vitex negundo</a></i></td>
+        <td>Coast, inland</td>
+        <td>Stomach pain, menstrual issues, blood in stool</td>
+        <td>Roots, barks, stems, leaves</td>
+        <td>Åmot Påsmon Reckla</td>
+      </tr>
+      <tr>
+        <td><strong>Åhgaga / Ågahgah</strong></td>
+        <td><i><a href="https://en.wikipedia.org/wiki/Zehneria" target="_blank">Zehneria guamensis</a></i></td>
+        <td>Coast, mountain</td>
+        <td>Fever, body aches, headaches</td>
+        <td>Roots, vines, leaves</td>
+        <td>Åmot Tabadiyu, Åmot Fresku, Åmot Måkpong Åmko', Åmot Måkpong Påtgon</td>
+      </tr>
+      <tr>
+        <td><strong>Atmagoson Hålom Tåno'</strong></td>
+        <td><i><a href="https://en.wikipedia.org/wiki/Momordica_charantia" target="_blank">Momordica charantia</a></i></td>
+        <td>Coast, inland, mountain</td>
+        <td>High cholesterol, phlegm in newborns</td>
+        <td>Leaves, fruits</td>
+        <td>Åmot Potga, Åmot Tákhilo' Håga</td>
+      </tr>
+      <tr>
+        <td><strong>Atmahåyan</strong></td>
+        <td><i><a href="https://en.wikipedia.org/wiki/Pipturus_argenteus" target="_blank">Pipturus argenteus</a></i></td>
+        <td>Coast</td>
+        <td>Swollen body parts, boils</td>
+        <td>Leaves, flowers</td>
+        <td>Åmot Pokpok</td>
+      </tr>
+    </tbody>
+  </table>
+
+</body>
+</html>
